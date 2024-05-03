@@ -1,6 +1,7 @@
 package com.app.utils;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import com.app.coreclasses.Customer;
@@ -14,14 +15,19 @@ public class CMSValidations {
 		// 1. create customer class instance wrapping PK
 		Customer newCust = new Customer(email);
 		if (customerList.contains(newCust))
-			throw new CMSException("Dup Email !!!!");
+			throw new CMSException("This EmailId is already Registered !!!!");
+		
+		 if(email.endsWith(".com") || email.endsWith(".org") || email.endsWith(".net"))
+			 System.out.println("Correct format of Email");
+		 throw new CMSException("Email format incorrect");
+		 
 	}
 
 	// add a method to parse n validate plan n it's charges
 	public static ServicePlan parseAndValidatePlanAndCharges(String plan, double regAmount) throws CMSException {
 //1. parse string(plan) -- > enum
 		ServicePlan servicePlan = ServicePlan.valueOf(plan.toUpperCase());
-		// => plan is valid , now chk if reg amount is correct
+		// plan is valid , now check if reg amount is correct
 		if (servicePlan.getPlanCost() == regAmount)
 			return servicePlan;
 		// => incorrect reg amount : throw custom exc
@@ -37,8 +43,26 @@ public class CMSValidations {
 		ServicePlan servicePlan = parseAndValidatePlanAndCharges
 				(plan, regAmount);
 		LocalDate bithDate = LocalDate.parse(dob);
+		validateEmail(password);
+		parseAndValidateDob(dob);
 		// => all i/ps are valid , ret validated customer details to the caller
 		return new Customer(firstName, lastName, 
 				email, password, regAmount, bithDate, servicePlan);
+	}
+	
+	public static void validateEmail(String password) throws CMSException
+	{
+		String regEx="((?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#@$*]).{5,20})";
+		if(!password.matches(regEx))
+		throw new CMSException("Invalid Password ");
+	}
+	
+	public static LocalDate parseAndValidateDob(String dob) throws CMSException
+	{
+		LocalDate date=LocalDate.parse(dob);
+		if(Period.between(date,LocalDate.now()).getYears()<21)
+			throw new CMSException("You are Minor to creat ACcount");
+		return date;
+		
 	}
 }
