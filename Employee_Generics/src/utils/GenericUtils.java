@@ -22,7 +22,7 @@ public class GenericUtils {
 		double sum = 0;
 		for (Emp e : list) {
 			sum += e.computeSalary();
-		    System.out.println("hi"+e.computeSalary());
+		    System.out.println(e.computeSalary());
 		    }
 		return sum;
 	}
