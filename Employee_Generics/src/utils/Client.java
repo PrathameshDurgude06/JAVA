@@ -9,6 +9,7 @@ import java.util.Vector;
 import com.app.core.Emp;
 import com.app.core.HRMgr;
 import com.app.core.Mgr;
+import com.app.core.SalesMgr;
 import com.app.core.Worker;
 
 import static utils.GenericUtils.*;
@@ -37,7 +38,6 @@ public class Client {
 		 Worker a3=new Worker(600);
 		 wkrs.add(a1);
 		 wkrs.add(a2);
-		 
 		 wkrs.add(a3);
 		 any=wkrs;
 		 sum=sumOfSalaries(wkrs);
