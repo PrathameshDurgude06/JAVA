@@ -1,9 +1,10 @@
 package com.app.coreclasses;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @SuppressWarnings("unused")
-public class Customer implements Comparable<Customer>{
+public class Customer implements Comparable<Customer>,Serializable{
 	private int customerId;
 	private String firstName;
 	private String lastName;

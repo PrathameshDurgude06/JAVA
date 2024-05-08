@@ -16,16 +16,12 @@ public class CMSValidations {
 		Customer newCust = new Customer(email);
 		if (customerList.contains(newCust))
 			throw new CMSException("This EmailId is already Registered !!!!");
-		
-		 if(email.endsWith(".com") || email.endsWith(".org") || email.endsWith(".net"))
-			 System.out.println("Correct format of Email");
-		 throw new CMSException("Email format incorrect");
 		 
 	}
 
 	// add a method to parse n validate plan n it's charges
 	public static ServicePlan parseAndValidatePlanAndCharges(String plan, double regAmount) throws CMSException {
-//1. parse string(plan) -- > enum
+		//1. parse string(plan) -- > enum
 		ServicePlan servicePlan = ServicePlan.valueOf(plan.toUpperCase());
 		// plan is valid , now check if reg amount is correct
 		if (servicePlan.getPlanCost() == regAmount)
@@ -43,18 +39,26 @@ public class CMSValidations {
 		ServicePlan servicePlan = parseAndValidatePlanAndCharges
 				(plan, regAmount);
 		LocalDate bithDate = LocalDate.parse(dob);
-		validateEmail(password);
+		validateEmail(email);
+		validatePassword(password);
 		parseAndValidateDob(dob);
 		// => all i/ps are valid , ret validated customer details to the caller
 		return new Customer(firstName, lastName, 
 				email, password, regAmount, bithDate, servicePlan);
 	}
 	
-	public static void validateEmail(String password) throws CMSException
+	public static void validatePassword(String password) throws CMSException
 	{
-		String regEx="((?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#@$*]).{5,20})";
+		String regEx="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#@$*]).{5,20})";
 		if(!password.matches(regEx))
-		throw new CMSException("Invalid Password ");
+			throw new CMSException("Invalid Password ");
+	}
+	
+	public static void validateEmail(String email) throws CMSException
+	{
+		String mail="^[A-Za-z0-9+_.-]+@(?:[A-Za-z0-9-]+\\\\.)+(com|org|net)$";
+		if(!email.matches(mail))
+			throw new CMSException("Invalid Email");
 	}
 	
 	public static LocalDate parseAndValidateDob(String dob) throws CMSException

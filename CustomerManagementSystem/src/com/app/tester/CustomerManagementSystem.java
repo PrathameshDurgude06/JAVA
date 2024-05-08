@@ -1,20 +1,25 @@
 package com.app.tester;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.app.coreclasses.Customer;
 import com.app.utils.CMSValidations;
 import com.app.utils.CustomerUtils;
+import static com.app.utils.IOUtils.*;
 
 public class CustomerManagementSystem {
 
-	public static void main(String[] args) {
+	@SuppressWarnings("static-access")
+	public static void main(String[] args) throws IOException {
 			try (Scanner sc = new Scanner(System.in)) {
 				// init phase
 				boolean exit = false;
@@ -23,7 +28,9 @@ public class CustomerManagementSystem {
 				while (!exit) {
 					System.out.println("Options :\n"+" 1. Sign Up\n"+" 2. Sign In all\n"+" 3. Change Password\n"+" 4. Display All Customers\n"
 							+" 5. Un Subscribe\n"+" 6. Display Customers sorted by email (asc)\n"
-							+" 7. Display customer details sorted as per the dob n last name\n"+" 8. Remove Customer details\n"+" 0. Exit");
+							+" 7. Display customer details sorted as per the dob n last name\n"+" 8. Remove Customer details\n"
+							+" 9. Store Data in binary file\n"+" 10. Restore details from Binary file\n"+" 0. Exit");
+					
 					System.out.println("Select Option from Menu");
 					try {
 						switch (sc.nextInt()) {
@@ -78,15 +85,33 @@ public class CustomerManagementSystem {
 						customer=CustomerUtils.removeCustomerByPlanAndDob(sc.next(),sc.next(),customerList);
 						System.out.println("Customer details removed sucessfully"+customer);
 						break;
+						
+						case 9:Map<String,Customer>custMap=new HashMap<>();
+							for(Customer c: customerList) {
+							custMap.put(c.getEmail(),c);
+							System.out.println("Enter File name to store details");
+							writeDetails(custMap,sc.next());
+						}
+							break;
+						
+						case 10:System.out.println("Enter file name to read details");
+							Map<String,Customer>map=readDetails(sc.next());
+							System.out.println("Student details -");
+							map.forEach((k,v) -> System.out.println(v));
+							break;
+							
 						case 0:
 							exit = true;
 							break;
 						}
+						
 					} catch (Exception e) {
 						sc.nextLine();
 						System.out.println(e);// toString
 					}
+						
 				}
+				
 			}
 
 		}

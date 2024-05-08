@@ -46,7 +46,6 @@ class Test1 {
 		map.values().removeIf(s -> s.getGpa() < 6);//convert Map into Collection<Student> 
 		map.forEach((k, v) -> System.out.println(v));
 		
-		
 		}
 
 }
