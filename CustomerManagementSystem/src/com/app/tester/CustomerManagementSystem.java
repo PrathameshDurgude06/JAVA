@@ -90,12 +90,14 @@ public class CustomerManagementSystem {
 							for(Customer c: customerList) {
 							custMap.put(c.getEmail(),c);
 							System.out.println("Enter File name to store details");
-							writeDetails(custMap,sc.next());
+							sc.nextLine();
+							writeDetails(custMap,sc.nextLine());
 						}
 							break;
 						
 						case 10:System.out.println("Enter file name to read details");
-							Map<String,Customer>map=readDetails(sc.next());
+							sc.nextLine();
+							Map<String,Customer>map=readDetails(sc.nextLine());
 							System.out.println("Student details -");
 							map.forEach((k,v) -> System.out.println(v));
 							break;
@@ -107,7 +109,7 @@ public class CustomerManagementSystem {
 						
 					} catch (Exception e) {
 						sc.nextLine();
-						System.out.println(e);// toString
+						e.printStackTrace();
 					}
 						
 				}

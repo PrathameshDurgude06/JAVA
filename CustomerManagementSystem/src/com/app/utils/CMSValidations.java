@@ -56,7 +56,7 @@ public class CMSValidations {
 	
 	public static void validateEmail(String email) throws CMSException
 	{
-		String mail="^[A-Za-z0-9+_.-]+@(?:[A-Za-z0-9-]+\\\\.)+(com|org|net)$";
+		String mail="^[A-Za-z0-9+_.-]+@(?:[A-Za-z0-9-]+\\.)+(com|org|net)$";
 		if(!email.matches(mail))
 			throw new CMSException("Invalid Email");
 	}
