@@ -63,6 +63,7 @@ public class Customer implements Comparable<Customer>,Serializable{
 		System.out.println("in compareTo");
 		return this.email.compareTo(cust.email);
 		
+		
 	}
 
 	public int getCustomerId() {
